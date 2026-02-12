@@ -33,26 +33,25 @@
 	</div>
 	
 	<script>
-	    $(document).ready(function(){
-			$("button").click(function(){
-			   var t = Number($('#temp').val());//celsius
-			   var u = $('#unit').val();
-			   
-			   if(isNaN(t)){
-					msg = "Please verify whether the temperature value is correct!!!";
-					alert(msg);
-					return;
-			   }
-			   if(!(t >= -100 && t <= 100)){
-					msg = "Tempurature entered (in Celsius) must be between 0 and 100 C'";
-					alert(msg);
-					return;
-			   }
-			   
+		function validate(temp){
+			
+			if(isNaN(temp)){
+				msg = "Please verify whether the temperature value is correct!!!";
+				alert(msg);
+				return;
+			}
+			if(!(temp >= -100 && temp <= 100)){
+				msg = "Tempurature entered (in Celsius) must be between 0 and 100 C'";
+				alert(msg);
+				return;
+			}
+		}
+		function calTemp(u, t){
+
 			   var t1;
 			   var u1;
-			   
-			   if(u == "F"){
+
+			if(u == "F"){
 					t1 = t * (9/5) + 32;
 					u1 = "Fahrenheit";
 			   }else if(u == "K"){
@@ -62,8 +61,18 @@
 					t1 = t * (4/5);
                     u1 = "Réaumur";
 			   }
+				return {"t1":t1, "u1":u1};
+		}
+	    $(document).ready(function(){
+			$("button").click(function(){
+			   var t = Number($('#temp').val());//celsius
+			   var u = $('#unit').val();
 			   
-			   alert("Temperature is "+t1+" in "+u1);
+			   validate(t);
+			   
+			   var c = calTemp(u, t);
+			   
+			   document.getElementById("result").innerText = "Temperature is "+c.t1+" in "+c.u1;
 			});
 		});
 	</script>
