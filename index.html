@@ -46,17 +46,12 @@
 				return;
 			}
 		}
-	    $(document).ready(function(){
-			$("button").click(function(){
-			   var t = Number($('#temp').val());//celsius
-			   var u = $('#unit').val();
-			   
-			   validate(t);
-			   
+		function calTemp(u, t){
+
 			   var t1;
 			   var u1;
-			   
-			   if(u == "F"){
+
+			if(u == "F"){
 					t1 = t * (9/5) + 32;
 					u1 = "Fahrenheit";
 			   }else if(u == "K"){
@@ -66,8 +61,18 @@
 					t1 = t * (4/5);
                     u1 = "Réaumur";
 			   }
+				return {"t1":t1, "u1":u1};
+		}
+	    $(document).ready(function(){
+			$("button").click(function(){
+			   var t = Number($('#temp').val());//celsius
+			   var u = $('#unit').val();
 			   
-			   alert("Temperature is "+t1+" in "+u1);
+			   validate(t);
+			   
+			   var c = calTemp(u, t);
+			   
+			   alert("Temperature is "+c.t1+" in "+c.u1);
 			});
 		});
 	</script>
